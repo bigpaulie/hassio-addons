@@ -11,12 +11,14 @@ options:
   discord_token: ""
   webhook_url: ""
   allowed_channels: []
+  debug: false
 
 schema:
   discord_token: password
   webhook_url: str
   allowed_channels:
     - str
+  debug: bool
 
 arch:
   - amd64

@@ -11,3 +11,8 @@ configuration:
     description: >-
       List of Discord channel IDs to forward. Leave empty to forward messages
       from all channels.
+  debug:
+    name: Debug logging
+    description: >-
+      Enable verbose logs in the add-on log (message filtering, webhook
+      requests, Discord gateway events). Turn off when not troubleshooting.

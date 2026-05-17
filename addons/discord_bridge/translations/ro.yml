@@ -11,3 +11,9 @@ configuration:
     description: >-
       Lista ID-urilor canalelor Discord de redirecționat. Lăsați gol pentru a
       redirecționa mesajele din toate canalele.
+  debug:
+    name: Jurnalizare debug
+    description: >-
+      Activează jurnale detaliate în logul add-on-ului (filtrare mesaje,
+      cereri webhook, evenimente gateway Discord). Dezactivați când nu
+      depanați.
