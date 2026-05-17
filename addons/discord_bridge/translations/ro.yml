@@ -1,0 +1,13 @@
+---
+configuration:
+  discord_token:
+    name: Token bot Discord
+    description: Token-ul botului folosit pentru conectarea la serverul Discord.
+  webhook_url:
+    name: URL webhook
+    description: URL-ul webhook n8n către care vor fi redirecționate mesajele Discord.
+  allowed_channels:
+    name: Canale permise
+    description: >-
+      Lista ID-urilor canalelor Discord de redirecționat. Lăsați gol pentru a
+      redirecționa mesajele din toate canalele.

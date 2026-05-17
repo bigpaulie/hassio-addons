@@ -1,0 +1,13 @@
+---
+configuration:
+  discord_token:
+    name: Discord Bot Token
+    description: The bot token used to connect to your Discord server.
+  webhook_url:
+    name: Webhook URL
+    description: The n8n webhook URL where Discord messages will be forwarded.
+  allowed_channels:
+    name: Allowed Channels
+    description: >-
+      List of Discord channel IDs to forward. Leave empty to forward messages
+      from all channels.

@@ -1,0 +1,23 @@
+name: Discord Bridge
+version: "1.0.0"
+slug: discord_bridge
+description: Discord to n8n bridge
+startup: application
+boot: auto
+
+init: false
+
+options:
+  discord_token: ""
+  webhook_url: ""
+  allowed_channels: []
+
+schema:
+  discord_token: password
+  webhook_url: str
+  allowed_channels:
+    - str
+
+arch:
+  - amd64
+  - aarch64
