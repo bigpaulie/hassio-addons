@@ -8,8 +8,7 @@ ARG BUILD_VERSION
 RUN apk add --no-cache \
     nodejs \
     npm \
-  && corepack enable \
-  && corepack prepare pnpm@10.15.0 --activate
+  && npm install -g pnpm@10.15.0
 
 WORKDIR /app
 
