@@ -33,6 +33,7 @@ function debugLog(message: string, data?: Record<string, unknown>): void {
 debugLog('Starting Discord bridge', {
   allowed_channels: config.allowed_channels.length,
   channel_filter: config.allowed_channels.length > 0 ? 'restricted' : 'all',
+  webhook_url: config.webhook_url,
   webhook_configured: Boolean(config.webhook_url)
 });
 
@@ -81,16 +82,58 @@ client.on('messageCreate', async (message: Message) => {
     return;
   }
 
-  const payload = {
+  const payload: {
+    content: string;
+    author: { username: string; id: string };
+    reply_to?: {
+      message_id: string;
+      channel_id: string;
+      content?: string;
+      author?: { username: string; id: string };
+    };
+  } = {
     content: message.content,
-    author: message.author.username
+    author: {
+      username: message.author.username,
+      id: message.author.id
+    }
   };
+
+  if (message.reference) {
+    try {
+      const referenced = await message.fetchReference();
+      payload.reply_to = {
+        message_id: referenced.id,
+        channel_id: referenced.channel.id,
+        content: referenced.content,
+        author: {
+          username: referenced.author.username,
+          id: referenced.author.id
+        }
+      };
+    } catch (error) {
+      const messageText =
+        error instanceof Error ? error.message : String(error);
+      debugLog('Could not fetch referenced message', {
+        message_id: message.reference.messageId,
+        channel_id: message.reference.channelId,
+        error: messageText
+      });
+      if (message.reference.messageId) {
+        payload.reply_to = {
+          message_id: message.reference.messageId,
+          channel_id: message.reference.channelId
+        };
+      }
+    }
+  }
 
   debugLog('Forwarding message to webhook', {
     channel_id: message.channel.id,
     guild_id: message.guild?.id ?? null,
     author: message.author.username,
-    content_length: message.content.length
+    content_length: message.content.length,
+    is_reply: Boolean(message.reference)
   });
 
   try {
