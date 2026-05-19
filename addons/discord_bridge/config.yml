@@ -1,5 +1,5 @@
 name: Discord Bridge
-version: "1.0.0"
+version: "1.0.1"
 slug: discord_bridge
 description: Discord to n8n bridge
 startup: application

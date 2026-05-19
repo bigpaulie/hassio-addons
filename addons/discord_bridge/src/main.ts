@@ -1,19 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { Client, GatewayIntentBits, type Message } from 'discord.js';
+import type { AddonOptions } from './contracts/addon.option.js';
+import type { MessagePayload } from './contracts/message.payload.js';
 
-/** Home Assistant add-on options (from `/data/options.json`). */
-interface AddonOptions {
-  /** Discord bot token from the Developer Portal. */
-  discord_token: string;
-  /** Webhook URL (e.g. n8n) that receives forwarded messages. */
-  webhook_url: string;
-  /** Channel IDs to forward; empty array allows all channels. */
-  allowed_channels: string[];
-  /** When true, emit verbose logs to the add-on log. */
-  debug: boolean;
-}
-
-const config: AddonOptions = JSON.parse(
+const config = JSON.parse(
   readFileSync('/data/options.json', 'utf8')
 ) as AddonOptions;
 
@@ -82,16 +72,9 @@ client.on('messageCreate', async (message: Message) => {
     return;
   }
 
-  const payload: {
-    content: string;
-    author: { username: string; id: string };
-    reply_to?: {
-      message_id: string;
-      channel_id: string;
-      content?: string;
-      author?: { username: string; id: string };
-    };
-  } = {
+  const payload: MessagePayload = {
+    message_id: message.id,
+    channel_id: message.channel.id,
     content: message.content,
     author: {
       username: message.author.username,
